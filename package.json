@@ -1,0 +1,19 @@
+{
+  "name": "postgresql-prismaorm",
+  "version": "1.0.0",
+  "main": "app.js",
+  "_note": "--env-file=.env carica automaticamente le variabili d'ambiente da .env (solo da Node.js 20.6 in poi). Se hai una versione più vecchia devi usare dotenv con require('dotenv').config().",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --env-file=.env --watch app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0"
+  }
+}
