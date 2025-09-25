@@ -1,4 +1,7 @@
 
+# Requisiti
+Aver installato PostgreSQL dal sito originale (`https://www.postgresql.org/download/`), includendo durante il processo di installazione, il download di **pgAdmin**.
+
 # Step 1
 Installiamo i pacchetti di prisma con i comandi:  
 - `npm install --save-dev prisma`  
@@ -50,3 +53,29 @@ model User {
   email String  @unique
 }
 ```
+
+# Step 4
+Adesso bisogna creare il database. Per fare ciò basta:
+- aprire l'app ***pgAdmin***, installata assieme a *PostgreSQL*;
+- espandere il server locale indicato con il nome `PostgreSQL <version>` inserendo la password scelta durante l'installazione;
+- fare click destro su `Databases` → `Create` → `Database`;
+- inserire il nome del database e cliccare salva.
+
+
+# Step 5
+Adesso è possibile far migrare il codice scritto dentro a `schema.prisma` nel nostro database, trasformandolo in comandi SQL.  
+Questo si fa con il comando `npx prisma migrate dev --name init`, dove **init** sta per il nome che verrà dato alla migrazione.    
+Questo è utile perché Prisma crea una cartella dentro al percorso:
+```
+prisma/migrations/
+  dataeora_init/
+    migration.sql
+```
+che contiene tutte le migrazioni effettuate sul database, per tenere traccia delle modifiche.  
+Questo è utile perché permette di:
+- Capire cosa è cambiato
+- Ripristinare versioni precedenti
+- Lavorare in team senza sovrascrivere i database degli altri
+
+#### NOTA:  
+- Come primo nome va bene **init**.  
