@@ -1,17 +1,14 @@
 
 # Requisiti
-Aver installato PostgreSQL dal sito originale (`https://www.postgresql.org/download/`), includendo durante il processo di installazione, il download di **pgAdmin**.
+Aver installato *PostgreSQL* dal sito originale (`https://www.postgresql.org/download/`), includendo, durante il processo di installazione, il download di **pgAdmin**.
 
 # Step 1
-Installiamo i pacchetti di prisma con i comandi:  
-- `npm install --save-dev prisma`  
-- `npm install @prisma/client`  
-#### NOTE:  
-- **prisma** → CLI per creare schema, migrazioni e client.  
-- **@prisma/client** → libreria che userai nel codice per fare query.  
+Installiamo i pacchetti di *Prisma* con i comandi:  
+- `npm install --save-dev prisma` → CLI per creare schema, migrazioni e client;  
+- `npm install @prisma/client` → libreria che userai nel codice per fare query.  
 
 # Step 2
-Inizializziamo prisma con il comando `npx prisma init`.  
+Inizializziamo *Prisma* con il comando `npx prisma init`.  
 Questo crea i percorsi:  
 ``` 
 prisma/
@@ -21,15 +18,15 @@ prisma/
 
 A questo punto dentro al file *.env* si troverà una riga come:  
 `DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE?schema=public"`  
-bisogna aggiornarla con i propri dati PostgreSQL.
+bisogna aggiornarla con i propri dati *PostgreSQL*.
 Ad esempio:  
 `DATABASE_URL="postgresql://username:password123@localhost:5432/test-database?schema=public"`
 
 # Step 3
-Aprire il file *schema.prisma*, contenuto dentro a `prisma/schema.prisma`.  
-Questo contiene le informazioni che Prisma usa per connetersi al database.  
+Aprire il file *schema.prisma*, posizionato dentro a `prisma/schema.prisma`.  
+Questo contiene le informazioni che *Prisma* usa per connetersi al database.  
 Contiene principalmente 2 sezioni:
-- **Datasource** → dice a Prisma a quale database collegarsi e con quale provider:
+- **Datasource** → dice a *Prisma* a quale database collegarsi e con quale provider:
 ```
 datasource db {
   provider = "postgresql"         // tipo di database
@@ -45,7 +42,7 @@ generator client {
 ```
 
 A queste si aggiungono i **modelli** → rappresentano tabelle del database e le loro colonne.  
-Noi aggiungiamo gli utenti così:
+Per il nostro progetto, noi aggiungiamo il modello User così:
 ```
 model User {
   id    Int     @id @default(autoincrement())
@@ -56,26 +53,23 @@ model User {
 
 # Step 4
 Adesso bisogna creare il database. Per fare ciò basta:
-- aprire l'app ***pgAdmin***, installata assieme a *PostgreSQL*;
-- espandere il server locale indicato con il nome `PostgreSQL <version>` inserendo la password scelta durante l'installazione;
+- aprire l'app ***pgAdmin***, installata insieme a *PostgreSQL*;
+- espandere il server locale indicato con il nome `PostgreSQL <versione>` inserendo la password scelta durante l'installazione;
 - fare click destro su `Databases` → `Create` → `Database`;
 - inserire il nome del database e cliccare salva.
 
 
 # Step 5
 Adesso è possibile far migrare il codice scritto dentro a `schema.prisma` nel nostro database, trasformandolo in comandi SQL.  
-Questo si fa con il comando `npx prisma migrate dev --name init`, dove **init** sta per il nome che verrà dato alla migrazione.    
-Questo è utile perché Prisma crea una cartella dentro al percorso:
+Questo si fa scrivendo nel terminale il comando `npx prisma migrate dev --name init`, dove **init** sta per il nome che verrà dato alla migrazione.  
+*Prisma* crea una cartella che contiene tutte le migrazioni effettuate sul database, che si trova al percorso:
 ```
 prisma/migrations/
-  dataeora_init/
+  20250925180912_init/   // Nome della migrazione, formato da "<data e ora>_<nome migrazione>"
     migration.sql
 ```
-che contiene tutte le migrazioni effettuate sul database, per tenere traccia delle modifiche.  
-Questo è utile perché permette di:
-- Capire cosa è cambiato
-- Ripristinare versioni precedenti
-- Lavorare in team senza sovrascrivere i database degli altri
+Questa funzionalità di *Prisma* ci torna utile perché permette di:
+- capire cosa è cambiato;
+- ripristinare versioni precedenti;
+- lavorare in team senza sovrascrivere i database degli altri.
 
-#### NOTA:  
-- Come primo nome va bene **init**.  
