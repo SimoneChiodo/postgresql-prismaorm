@@ -130,7 +130,7 @@ app.listen(PORT, () => {
 Ora possiamo finalmente testare il nostro server con *Postman*.  
 Una volta aperto possiamo creare le nostre chiamate di test, entrambe all'indirizzo `http://localhost:3000/users`.
 - **Chiamata GET** → per ottenere tutti gli utenti salvati sul database.
-- **Chiamata POST** → cambiamo la sezione da *"Params"* a *"Body"* e selezioniamo il radio button chiamato *"raw"*. Nel box di testo che comparirà in basso inseriamo del codice JSON per creare un nuovo utente (*come quello nell'esempio qua in basso*). Una volta effettuata la chiamata otteremmo in risposta il nuovo utente creato.
+- **Chiamata POST** → cambiamo la sezione da *"Params"* a *"Body"* e selezioniamo il radio button chiamato *"raw"*. Nel box di testo che comparirà in basso inseriamo del codice JSON per creare un nuovo utente (*come quello nell'esempio qua in basso ↓*). Una volta effettuata la chiamata otteremmo in risposta il nuovo utente creato.
 ``` json
 {
     "_comment": "Codice JSON di esempio per la creazione di un utente",
