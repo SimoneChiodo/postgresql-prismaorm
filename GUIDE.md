@@ -73,3 +73,49 @@ Questa funzionalità di *Prisma* ci torna utile perché permette di:
 - ripristinare versioni precedenti;
 - lavorare in team senza sovrascrivere i database degli altri.
 
+
+# Step 6
+Ora concentriamoci sullo scrivere codice dentro a `app.js`.   
+Importiamo il necessario con:
+``` javascript
+require("dotenv").config();           // Importo il dotenv
+const express = require('express');   // Importo il Framework di Express
+
+// Adesso importo il client Prisma (dal percorso specificato nella variabile "output" dentro a schema.prisma)
+// Questo client ci permette di fare query al database PostgreSQL usando JavaScript/TypeScript in modo tipizzato e sicuro.
+const { PrismaClient } = require('./generated/prisma'); 
+``` 
+
+Creiamo le variabili:
+``` javascript
+const prisma = new PrismaClient();      // Crea un'istanza del Client Prisma
+const app = express();                  // Crea un'istanza di Express
+const PORT = process.env.PORT || 3000;  // Legge la variabile PORT dal file .env, altrimenti usa 3000
+app.use(express.json());                // È un middleware di Express che permette di interpretare il body delle richieste in JSON (necessario per ricevere dati dalle chiamate POST in formato JSON)
+```  
+
+Creiamo delle rotte:
+``` javascript
+// Rotta GET per leggere tutti gli utenti
+app.get('/users', async (req, res) => {
+  const users = await prisma.user.findMany();   // "prisma.user.findMany()": Prisma legge tutti i record della tabella User dal database
+  res.json(users);                              // Invia la risposta al client in formato JSON
+});
+
+// Rotta POST per creare un nuovo utente
+app.post('/users', async (req, res) => {
+  const { name, email } = req.body;             // Prende i dati inviati dal client
+  const newUser = await prisma.user.create({    // "prisma.user.create": crea un nuovo record nella tabella User
+    data: { name, email }
+  });
+  res.json(newUser);                            // Invia al client una copia del nuovo utente in formato JSON
+});
+``` 
+
+Creiamo la funzione per avviare il server:
+``` javascript
+// Fa partire il server Express e lo mette in ascolto sulla porta PORT (importata prima dal .env)
+app.listen(PORT, () => { 
+  console.log(`Server online all'indirizzo: http://localhost:${PORT}`);
+});
+```
