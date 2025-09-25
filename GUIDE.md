@@ -1,11 +1,14 @@
 
-# Requisiti
-Aver installato *PostgreSQL* dal sito originale (`https://www.postgresql.org/download/`), includendo, durante il processo di installazione, il download di **pgAdmin**.
+# Requisiti:
+- Aver installato **PostgreSQL** dal *sito ufficiale* (`https://www.postgresql.org/download/`), includendo, durante il processo di installazione, il download di **pgAdmin**.
+- Aver installato **Postman** per effettuare delle chiamate di test in comodità. Lo si può trovare sul *Microsoft Store* o sul *sito ufficiale* `https://www.postman.com/downloads/`.
+
 
 # Step 1
 Installiamo i pacchetti di *Prisma* con i comandi:  
 - `npm install --save-dev prisma` → CLI per creare schema, migrazioni e client;  
 - `npm install @prisma/client` → libreria che userai nel codice per fare query.  
+
 
 # Step 2
 Inizializziamo *Prisma* con il comando `npx prisma init`.  
@@ -21,6 +24,7 @@ A questo punto dentro al file *.env* si troverà una riga come:
 bisogna aggiornarla con i propri dati *PostgreSQL*.
 Ad esempio:  
 `DATABASE_URL="postgresql://username:password123@localhost:5432/test-database?schema=public"`
+
 
 # Step 3
 Aprire il file *schema.prisma*, posizionato dentro a `prisma/schema.prisma`.  
@@ -50,6 +54,7 @@ model User {
   email String  @unique
 }
 ```
+
 
 # Step 4
 Adesso bisogna creare il database. Per fare ciò basta:
@@ -118,4 +123,18 @@ Creiamo la funzione per avviare il server:
 app.listen(PORT, () => { 
   console.log(`Server online all'indirizzo: http://localhost:${PORT}`);
 });
+```
+
+
+# Step 7
+Ora possiamo finalmente testare il nostro server con *Postman*.  
+Una volta aperto possiamo creare le nostre chiamate di test, entrambe all'indirizzo `http://localhost:3000/users`.
+- **Chiamata GET** → per ottenere tutti gli utenti salvati sul database.
+- **Chiamata POST** → cambiamo la sezione da *"Params"* a *"Body"* e selezioniamo il radio button chiamato *"raw"*. Nel box di testo che comparirà in basso inseriamo del codice JSON per creare un nuovo utente (*come quello nell'esempio qua in basso*). Una volta effettuata la chiamata otteremmo in risposta il nuovo utente creato.
+``` json
+{
+    "_comment": "Codice JSON di esempio per la creazione di un utente",
+    "name": "Utente1",
+    "email": "email@example.com"
+}
 ```
